@@ -1,5 +1,5 @@
 package kata
 
 interface Notifier {
-    fun send()
+    fun send(message: String, recipient: Employee)
 }

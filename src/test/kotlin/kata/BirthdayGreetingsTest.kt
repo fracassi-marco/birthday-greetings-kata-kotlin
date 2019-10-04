@@ -1,9 +1,6 @@
 package kata
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime.now
 
@@ -18,6 +15,16 @@ class BirthdayGreetingsTest {
 
         BirthdayGreetings(employeeRepository, notifier).start()
 
-        verify(notifier, never()).send()
+        verify(notifier, never()).send(any(), any())
+    }
+
+    @Test
+    fun `send greeting to one employee`() {
+        val gigi = Employee("Gigi")
+        whenever(employeeRepository.bornOn(now().monthValue, now().dayOfMonth)).thenReturn(listOf(gigi))
+
+        BirthdayGreetings(employeeRepository, notifier).start()
+
+        verify(notifier).send("Happy birthday, dear Gigi!", gigi)
     }
 }
