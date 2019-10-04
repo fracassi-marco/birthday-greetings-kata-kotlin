@@ -19,12 +19,26 @@ class BirthdayGreetingsTest {
     }
 
     @Test
-    fun `send greeting to one employee`() {
+    fun `send greetings to one employee`() {
         val gigi = Employee("Gigi")
         whenever(employeeRepository.bornOn(now().monthValue, now().dayOfMonth)).thenReturn(listOf(gigi))
 
         BirthdayGreetings(employeeRepository, notifier).start()
 
         verify(notifier).send("Happy birthday, dear Gigi!", gigi)
+    }
+
+    @Test
+    fun `send greetings to multiple employees`() {
+        val gigi = Employee("Gigi")
+        val vito = Employee("Vito")
+        val alex = Employee("Alex")
+        whenever(employeeRepository.bornOn(now().monthValue, now().dayOfMonth)).thenReturn(listOf(gigi, vito, alex))
+
+        BirthdayGreetings(employeeRepository, notifier).start()
+
+        verify(notifier).send("Happy birthday, dear Gigi!", gigi)
+        verify(notifier).send("Happy birthday, dear Vito!", vito)
+        verify(notifier).send("Happy birthday, dear Alex!", alex)
     }
 }
