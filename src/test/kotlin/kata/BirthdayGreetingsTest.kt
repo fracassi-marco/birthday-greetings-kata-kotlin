@@ -2,7 +2,7 @@ package kata
 
 import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime.now
+import java.time.LocalDate.now
 
 class BirthdayGreetingsTest {
 
@@ -20,7 +20,7 @@ class BirthdayGreetingsTest {
 
     @Test
     fun `send greetings to one employee`() {
-        val gigi = Employee("Gigi")
+        val gigi = Employee("Gigi", now())
         whenever(employeeRepository.bornOn(now().monthValue, now().dayOfMonth)).thenReturn(listOf(gigi))
 
         BirthdayGreetings(employeeRepository, notifier).start()
@@ -30,9 +30,9 @@ class BirthdayGreetingsTest {
 
     @Test
     fun `send greetings to multiple employees`() {
-        val gigi = Employee("Gigi")
-        val vito = Employee("Vito")
-        val alex = Employee("Alex")
+        val gigi = Employee("Gigi", now())
+        val vito = Employee("Vito", now())
+        val alex = Employee("Alex", now())
         whenever(employeeRepository.bornOn(now().monthValue, now().dayOfMonth)).thenReturn(listOf(gigi, vito, alex))
 
         BirthdayGreetings(employeeRepository, notifier).start()

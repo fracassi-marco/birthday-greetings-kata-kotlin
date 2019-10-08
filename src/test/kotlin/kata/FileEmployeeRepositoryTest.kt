@@ -5,6 +5,8 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
+import java.time.LocalDate.parse
+import java.time.format.DateTimeFormatter
 
 class FileEmployeeRepositoryTest {
 
@@ -39,17 +41,19 @@ class FileEmployeeRepositoryTest {
 
         val employees = FileEmployeeRepository(file).bornOn(10, 8)
 
-        assertThat(employees.single()).isEqualTo(Employee("John"))
+        assertThat(employees.single()).isEqualTo(Employee("John", date("1982/10/08")))
     }
 
     @Test
     fun `filter by born date`() {
         file.writeText("last_name, first_name, date_of_birth, email")
-        file.appendText("\nDoe, John, 1982/10/08, john.doe@foobar.com")
+        file.appendText("\nDoe, John, 1982/10/12, john.doe@foobar.com")
         file.appendText("\nDoe, Alex, 1982/10/09, alex.doe@foobar.com")
 
-        val employees = FileEmployeeRepository(file).bornOn(10, 8)
+        val employees = FileEmployeeRepository(file).bornOn(10, 12)
 
-        assertThat(employees.single()).isEqualTo(Employee("John"))
+        assertThat(employees.single()).isEqualTo(Employee("John", date("1982/10/12")))
     }
+
+    private fun date(value: String) = parse(value, DateTimeFormatter.ofPattern("yyyy/MM/dd"))
 }

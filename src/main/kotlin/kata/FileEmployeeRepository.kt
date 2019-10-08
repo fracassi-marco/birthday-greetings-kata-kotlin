@@ -1,6 +1,8 @@
 package kata
 
 import java.io.File
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class FileEmployeeRepository(private val file: File) : EmployeeRepository {
 
@@ -13,8 +15,7 @@ class FileEmployeeRepository(private val file: File) : EmployeeRepository {
             .readLines()
             .drop(1)
             .map { it.split(", ") }
-            .filter { it.get(2).split("/").get(1).toInt() == month &&
-                    it.get(2).split("/").get(2).toInt() == dayOfMonth}
-            .map { Employee(it.get(1)) }
+            .map { Employee(it[1], LocalDate.parse(it[2], DateTimeFormatter.ofPattern("yyyy/MM/dd"))) }
+            .filter { it.bornOn(month, dayOfMonth) }
     }
 }
