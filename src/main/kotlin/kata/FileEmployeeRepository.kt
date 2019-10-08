@@ -1,8 +1,9 @@
 package kata
 
 import java.io.File
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+
+const val HEADER_SIZE = 1
+const val FIELD_SEPARATOR = ", "
 
 class FileEmployeeRepository(private val file: File) : EmployeeRepository {
 
@@ -13,8 +14,8 @@ class FileEmployeeRepository(private val file: File) : EmployeeRepository {
 
         return file
             .readLines()
-            .drop(1)
-            .map { it.split(", ") }
+            .drop(HEADER_SIZE)
+            .map { it.split(FIELD_SEPARATOR) }
             .map { Employee(it[1], it[2].asDate()) }
             .filter { it.bornOn(month, dayOfMonth) }
     }
