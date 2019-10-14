@@ -16,7 +16,7 @@ class FileEmployeeRepository(private val file: File) : EmployeeRepository {
             .readLines()
             .drop(HEADER_SIZE)
             .map { it.split(FIELD_SEPARATOR) }
-            .map { Employee(it[1], it[2].asDate()) }
+            .map { Employee(it[1], it[2].asDate(), "a@b.c") }
             .filter { it.bornOn(month, dayOfMonth) }
     }
 }

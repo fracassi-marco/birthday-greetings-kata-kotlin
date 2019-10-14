@@ -39,7 +39,7 @@ class FileEmployeeRepositoryTest {
 
         val employees = FileEmployeeRepository(file).bornOn(10, 8)
 
-        assertThat(employees.single()).isEqualTo(Employee("John", "1982/10/08".asDate()))
+        assertThat(employees.single()).isEqualTo(Employee("John", "1982/10/08".asDate(), "a@b.c"))
     }
 
     @Test
@@ -50,6 +50,6 @@ class FileEmployeeRepositoryTest {
 
         val employees = FileEmployeeRepository(file).bornOn(10, 12)
 
-        assertThat(employees.single()).isEqualTo(Employee("John", "1982/10/12".asDate()))
+        assertThat(employees.single()).isEqualTo(Employee("John", "1982/10/12".asDate(), "a@b.c"))
     }
 }

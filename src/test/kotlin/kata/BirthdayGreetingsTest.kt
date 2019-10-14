@@ -20,7 +20,7 @@ class BirthdayGreetingsTest {
 
     @Test
     fun `send greetings to one employee`() {
-        val gigi = Employee("Gigi", now())
+        val gigi = Employee("Gigi", now(), "a@b.c")
         whenever(employeeRepository.bornOn(now().monthValue, now().dayOfMonth)).thenReturn(listOf(gigi))
 
         BirthdayGreetings(employeeRepository, notifier).start()
@@ -30,9 +30,9 @@ class BirthdayGreetingsTest {
 
     @Test
     fun `send greetings to multiple employees`() {
-        val gigi = Employee("Gigi", now())
-        val vito = Employee("Vito", now())
-        val alex = Employee("Alex", now())
+        val gigi = Employee("Gigi", now(), "a@b.c")
+        val vito = Employee("Vito", now(), "a@b.c")
+        val alex = Employee("Alex", now(), "a@b.c")
         whenever(employeeRepository.bornOn(now().monthValue, now().dayOfMonth)).thenReturn(listOf(gigi, vito, alex))
 
         BirthdayGreetings(employeeRepository, notifier).start()
