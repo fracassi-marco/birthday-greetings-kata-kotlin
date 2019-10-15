@@ -2,7 +2,6 @@ package kata
 
 import java.io.File
 
-const val HEADER_SIZE = 1
 const val FIELD_SEPARATOR = ", "
 
 class FileEmployeeRepository(private val file: File) : EmployeeRepository {
@@ -14,9 +13,13 @@ class FileEmployeeRepository(private val file: File) : EmployeeRepository {
 
         return file
             .readLines()
-            .drop(HEADER_SIZE)
+            .skipHeader()
             .map { it.split(FIELD_SEPARATOR) }
             .map { Employee(it[1], it[2].asDate(), "a@b.c") }
             .filter { it.bornOn(month, dayOfMonth) }
+    }
+
+    private fun List<String>.skipHeader() : List<String>{
+        return this.drop(1)
     }
 }

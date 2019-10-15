@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage
 
 class EmailNotifier(private val smtp: Smtp) : Notifier {
 
-    override fun send(subject: String, message: String, recipient: Employee) {
+    override fun send(title: String, message: String, recipient: Employee) {
         val props = Properties()
         props["mail.smtp.host"] = smtp.host
         props["mail.smtp.port"] = smtp.port.toString()
@@ -19,7 +19,7 @@ class EmailNotifier(private val smtp: Smtp) : Notifier {
         val msg = MimeMessage(session)
         msg.setFrom(InternetAddress("sender@email.com"))
         msg.setRecipient(Message.RecipientType.TO, InternetAddress(recipient.email))
-        msg.subject = subject
+        msg.subject = title
         msg.setText(message)
         Transport.send(msg)
     }
