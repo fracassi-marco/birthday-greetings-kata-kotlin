@@ -26,7 +26,7 @@ class EmailNotifierTest {
 
     @Test
     fun `should send email`() {
-        EmailNotifier("subject", Smtp("localhost", EMAIL_SERVER_PORT)).send("text", Employee("ignore", now(), "foo@bar.baz"))
+        EmailNotifier(Smtp("localhost", EMAIL_SERVER_PORT)).send("subject", "text", Employee("ignore", now(), "foo@bar.baz"))
 
         val email = emailServer.receivedEmails.single()
 

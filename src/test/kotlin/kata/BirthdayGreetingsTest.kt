@@ -15,7 +15,7 @@ class BirthdayGreetingsTest {
 
         BirthdayGreetings(employeeRepository, notifier).start()
 
-        verify(notifier, never()).send(any(), any())
+        verify(notifier, never()).send(any(), any(), any())
     }
 
     @Test
@@ -25,7 +25,7 @@ class BirthdayGreetingsTest {
 
         BirthdayGreetings(employeeRepository, notifier).start()
 
-        verify(notifier).send("Happy birthday, dear Gigi!", gigi)
+        verify(notifier).send("Happy birthday!", "Happy birthday, dear Gigi!", gigi)
     }
 
     @Test
@@ -37,8 +37,8 @@ class BirthdayGreetingsTest {
 
         BirthdayGreetings(employeeRepository, notifier).start()
 
-        verify(notifier).send("Happy birthday, dear Gigi!", gigi)
-        verify(notifier).send("Happy birthday, dear Vito!", vito)
-        verify(notifier).send("Happy birthday, dear Alex!", alex)
+        verify(notifier).send(any(), any(), eq(gigi))
+        verify(notifier).send(any(), any(), eq(vito))
+        verify(notifier).send(any(), any(), eq(alex))
     }
 }

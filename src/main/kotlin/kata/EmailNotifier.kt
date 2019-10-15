@@ -9,9 +9,9 @@ import javax.mail.internet.MimeMessage
 
 
 
-class EmailNotifier(private val subject: String, private val smtp: Smtp) : Notifier {
+class EmailNotifier(private val smtp: Smtp) : Notifier {
 
-    override fun send(message: String, recipient: Employee) {
+    override fun send(subject: String, message: String, recipient: Employee) {
         val props = Properties()
         props["mail.smtp.host"] = smtp.host
         props["mail.smtp.port"] = smtp.port.toString()

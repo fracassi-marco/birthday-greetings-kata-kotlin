@@ -7,6 +7,6 @@ class BirthdayGreetings(private val employeeRepository: EmployeeRepository, priv
     fun start() {
         employeeRepository
             .bornOn(now().monthValue, now().dayOfMonth)
-            .forEach { notifier.send("Happy birthday, dear ${it.name}!", it) }
+            .forEach { notifier.send("Happy birthday!", "Happy birthday, dear ${it.name}!", it) }
     }
 }
