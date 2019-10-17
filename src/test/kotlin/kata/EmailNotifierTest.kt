@@ -1,6 +1,7 @@
 package kata
 
 import com.dumbster.smtp.SimpleSmtpServer
+import kata.Date.Companion.today
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -26,7 +27,7 @@ class EmailNotifierTest {
 
     @Test
     fun `should send email`() {
-        EmailNotifier(Smtp("localhost", EMAIL_SERVER_PORT)).send("subject", "text", Employee("ignore", now(), "foo@bar.baz"))
+        EmailNotifier(Smtp("localhost", EMAIL_SERVER_PORT)).send("subject", "text", Employee("ignore", today(), "foo@bar.baz"))
 
         val email = emailServer.receivedEmails.single()
 

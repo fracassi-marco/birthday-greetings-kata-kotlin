@@ -1,12 +1,12 @@
 package kata
 
-import java.time.LocalDateTime.now
+import kata.Date.Companion.today
 
 class BirthdayGreetings(private val employeeRepository: EmployeeRepository, private val notifier: Notifier) {
 
     fun start() {
         employeeRepository
-            .bornOn(now().monthValue, now().dayOfMonth)
+            .bornOn(today())
             .forEach { notifier.send("Happy birthday!", "Happy birthday, dear ${it.name}!", it) }
     }
 }

@@ -1,8 +1,8 @@
 package kata
 
 import com.nhaarman.mockitokotlin2.*
+import kata.Date.Companion.today
 import org.junit.jupiter.api.Test
-import java.time.LocalDate.now
 
 class BirthdayGreetingsTest {
 
@@ -11,7 +11,7 @@ class BirthdayGreetingsTest {
 
     @Test
     fun `no employees`() {
-        whenever(employeeRepository.bornOn(now().monthValue, now().dayOfMonth)).thenReturn(emptyList())
+        whenever(employeeRepository.bornOn(today())).thenReturn(emptyList())
 
         BirthdayGreetings(employeeRepository, notifier).start()
 
@@ -20,8 +20,8 @@ class BirthdayGreetingsTest {
 
     @Test
     fun `send greetings to one employee`() {
-        val gigi = Employee("Gigi", now(), "a@b.c")
-        whenever(employeeRepository.bornOn(now().monthValue, now().dayOfMonth)).thenReturn(listOf(gigi))
+        val gigi = Employee("Gigi", today(), "a@b.c")
+        whenever(employeeRepository.bornOn(today())).thenReturn(listOf(gigi))
 
         BirthdayGreetings(employeeRepository, notifier).start()
 
@@ -30,10 +30,10 @@ class BirthdayGreetingsTest {
 
     @Test
     fun `send greetings to multiple employees`() {
-        val gigi = Employee("Gigi", now(), "a@b.c")
-        val vito = Employee("Vito", now(), "a@b.c")
-        val alex = Employee("Alex", now(), "a@b.c")
-        whenever(employeeRepository.bornOn(now().monthValue, now().dayOfMonth)).thenReturn(listOf(gigi, vito, alex))
+        val gigi = Employee("Gigi", today(), "a@b.c")
+        val vito = Employee("Vito", today(), "a@b.c")
+        val alex = Employee("Alex", today(), "a@b.c")
+        whenever(employeeRepository.bornOn(today())).thenReturn(listOf(gigi, vito, alex))
 
         BirthdayGreetings(employeeRepository, notifier).start()
 

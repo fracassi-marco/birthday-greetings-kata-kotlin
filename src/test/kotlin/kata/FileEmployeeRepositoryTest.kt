@@ -1,5 +1,6 @@
 package kata
 
+import kata.Date.Companion.today
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -18,7 +19,7 @@ class FileEmployeeRepositoryTest {
 
     @Test
     fun `empty file`() {
-        val employees = FileEmployeeRepository(file).bornOn(10, 8)
+        val employees = FileEmployeeRepository(file).bornOn(today())
 
         assertThat(employees).isEmpty()
     }
@@ -27,7 +28,7 @@ class FileEmployeeRepositoryTest {
     fun `file with header`() {
         file.writeText("last_name, first_name, date_of_birth, email")
 
-        val employees = FileEmployeeRepository(file).bornOn(10, 8)
+        val employees = FileEmployeeRepository(file).bornOn(today())
 
         assertThat(employees).isEmpty()
     }
@@ -37,7 +38,7 @@ class FileEmployeeRepositoryTest {
         file.writeText("last_name, first_name, date_of_birth, email")
         file.appendText("\nDoe, John, 1982/10/08, john.doe@foobar.com")
 
-        val employees = FileEmployeeRepository(file).bornOn(10, 8)
+        val employees = FileEmployeeRepository(file).bornOn(Date(10, 8))
 
         assertThat(employees.single()).isEqualTo(Employee("John", "1982/10/08".asDate(), "a@b.c"))
     }
@@ -48,7 +49,7 @@ class FileEmployeeRepositoryTest {
         file.appendText("\nDoe, John, 1982/10/12, john.doe@foobar.com")
         file.appendText("\nDoe, Alex, 1982/10/09, alex.doe@foobar.com")
 
-        val employees = FileEmployeeRepository(file).bornOn(10, 12)
+        val employees = FileEmployeeRepository(file).bornOn(Date(10, 12))
 
         assertThat(employees.single()).isEqualTo(Employee("John", "1982/10/12".asDate(), "a@b.c"))
     }

@@ -2,11 +2,13 @@ package kata
 
 import java.io.File
 
-const val FIELD_SEPARATOR = ", "
+private const val FIELD_SEPARATOR = ", "
+private const val NAME_INDEX = 1
+private const val BORN_DATE = 2
 
 class FileEmployeeRepository(private val file: File) : EmployeeRepository {
 
-    override fun bornOn(month: Int, dayOfMonth: Int): List<Employee> {
+    override fun bornOn(date: Date): List<Employee> {
         if(!file.exists()) {
             return emptyList()
         }
@@ -15,11 +17,11 @@ class FileEmployeeRepository(private val file: File) : EmployeeRepository {
             .readLines()
             .skipHeader()
             .map { it.split(FIELD_SEPARATOR) }
-            .map { Employee(it[1], it[2].asDate(), "a@b.c") }
-            .filter { it.bornOn(month, dayOfMonth) }
+            .map { Employee(it[NAME_INDEX], it[BORN_DATE].asDate(), "a@b.c") }
+            .filter { it.bornOn(date) }
     }
 
     private fun List<String>.skipHeader() : List<String>{
-        return this.drop(1)
+        return this.drop(NAME_INDEX)
     }
 }
